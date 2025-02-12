@@ -1,10 +1,18 @@
 "use client";
 
-import { useGetProductsQuery } from "@/state/api";
+import { useCreateProductMutation, useGetProductsQuery } from "@/state/api";
 import { PlusCircleIcon, SearchIcon } from "lucide-react";
 import { useState } from "react";
 import Header from "../(components)/Header";
 import Rating from "../(components)/Rating";
+import CreateProductModal from "./CreateProductModal";
+
+type ProductFormData = {
+  name: string;
+  price: number;
+  stockQuantity: number;
+  rating: number;
+};
 
 const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -15,6 +23,11 @@ const Products = () => {
     isLoading,
     isError,
   } = useGetProductsQuery(searchTerm);
+
+  const [createProduct] = useCreateProductMutation();
+  const handleCreateProduct = async (productData: ProductFormData) => {
+    await createProduct(productData);
+  };
 
   if (isLoading) {
     return <div className="py-4 "> Loading.....</div>;
@@ -37,7 +50,7 @@ const Products = () => {
             className="w-full py-2 px-4 rounded bg-white"
             placeholder="Search Products...."
             value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => setSearchTerm(e.target.value) }
           />
         </div>
       </div>
@@ -75,7 +88,7 @@ const Products = () => {
                 </div>
                 {product.rating && (
                   <div className="flex items-center mt-2">
-                    <Rating rating={product.rating}/>
+                    <Rating rating={product.rating} />
                   </div>
                 )}
               </div>
@@ -85,7 +98,11 @@ const Products = () => {
       </div>
 
       {/* MODAL */}
-      
+      <CreateProductModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onCreate={handleCreateProduct}
+      />
     </div>
   );
 };
