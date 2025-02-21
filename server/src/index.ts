@@ -8,6 +8,7 @@ import dashboardRoutes from "./routes/dashboardRoutes"
 import productRoutes from './routes/productRoutes'
 import userRoutes from "./routes/userRoutes"
 import expenseRoutes from './routes/expenseRoutes'
+import connectDB from "../database/connectDB"
 
 // ROUTE IMPORTS
 
@@ -22,6 +23,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended : false}));
 app.use(cors());
 
+
+const dbUrl = process.env.DB_URL!;
+
+connectDB(dbUrl);
 
 
 
