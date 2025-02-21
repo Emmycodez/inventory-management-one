@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque } from "next/font/google"; // Import Bricolage Grotesque
+// import { Bricolage_Grotesque } from "next/font/google"; // Import Bricolage Grotesque
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import DashboardWrapper from "./dashboardWrapper";
 
-const bricolageGrotesque = Bricolage_Grotesque({
+// const bricolageGrotesque = Bricolage_Grotesque({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"], // Add more if required
+//   display: "swap",
+// });
+
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"], // Add more if required
+  weight: ["400", "500", "600", "700"], // You can add any other weights needed
   display: "swap",
 });
 
@@ -22,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${bricolageGrotesque.className} antialiased`}>
+      <body className={`${poppins.className} antialiased`}>
         <DashboardWrapper>{children}</DashboardWrapper>
       </body>
     </html>
